@@ -1,0 +1,12 @@
+<h2 class="title">
+  Flappy CRISPR AI
+  <span style="font-size: 0.75rem"> (by DC:lentini23 - X:quant_dude)</span>
+</h2>
+<img src="assets/header.jpg" class="header-image" alt="header-image" tabindex="-1" />
+<div class="game-container">
+  <div class="controls">
+    <button *ngIf="!isGameRunning && !gameOver" (click)="startGame()">Start</button>
+    <button *ngIf="!isGameRunning && gameOver" (click)="restartGame()">Restart</button>
+  </div>
+  <canvas #gameCanvas width="800" height="600"></canvas>
+</div>

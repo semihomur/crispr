@@ -1,0 +1,144 @@
+/* Global CSS Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Prevent scrolling */
+}
+
+/* Title Styling */
+.title {
+  position: fixed; /* Fix the title at the top */
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  color: black;
+  font-size: 24px;
+  text-align: center;
+  margin: 0;
+}
+
+/* Header Image Styling */
+.header-image {
+  display: block;
+  max-width: 90%; /* Keep the image responsive */
+  max-height: 225px; /* Maintain aspect ratio */
+  margin: 60px auto 10px; /* Adjust spacing */
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Game Container Styling */
+.game-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  //height: calc(100vh - 140px); /* Adjust to include title and header image */
+  overflow: hidden;
+  position: relative;
+}
+
+/* Canvas Styling */
+canvas {
+  display: block;
+  max-width: 800px; /* Default size for desktop */
+  max-height: 600px;
+  width: 100%; /* Adjust for responsiveness */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* Controls Styling */
+.controls {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1200px) {
+  .title {
+    font-size: 22px;
+  }
+
+  .header-image {
+    max-width: 80%;
+  }
+
+  canvas {
+    max-width: 600px; /* Adjust canvas size for smaller screens */
+    max-height: 450px;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 20px;
+  }
+
+  .header-image {
+    max-width: 75%;
+  }
+
+  canvas {
+    max-width: 500px;
+    max-height: 375px;
+  }
+
+  button {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 18px;
+  }
+
+  .header-image {
+    max-width: 70%;
+  }
+
+  canvas {
+    max-width: 95%; /* Further scaling for smaller screens */
+    max-height: 300px;
+  }
+
+  button {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+}
