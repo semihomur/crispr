@@ -9,11 +9,12 @@ export class AppComponent implements OnInit {
   @ViewChild('gameCanvas', { static: true }) gameCanvas!: ElementRef<HTMLCanvasElement>;
 
   private ctx!: CanvasRenderingContext2D;
-  private bird = { x: 150, y: 200, size: 40, velocity: 0, gravity: 0.5, imageIndex: 0 };
+  private bird = { x: 150, y: 200, size: 40, velocity: 0, gravity: 0.4, imageIndex: 0 };
   private pipes: { x: number; y: number; width: number; height: number; gap: number }[] = [];
   private score = 0;
   isGameRunning = false;
   gameOver = false;
+  countdown: number | null = null; // Countdown value
 
   private birdImages: HTMLImageElement[] = [];
   private pipeImages: { top: HTMLImageElement; bottom: HTMLImageElement } = { top: new Image(), bottom: new Image() };
@@ -26,9 +27,7 @@ export class AppComponent implements OnInit {
 
   loadImages() {
     // Load bird images
-    const birdPaths = [
-      'assets/m1.jpg',
-    ];
+    const birdPaths = ['assets/m1.jpg'];
     this.birdImages = birdPaths.map((path) => {
       const img = new Image();
       img.src = path;
@@ -36,8 +35,8 @@ export class AppComponent implements OnInit {
     });
 
     // Load pipe images
-    this.pipeImages.top.src = 'assets/dna1.jpg'; // Add your top pipe image here
-    this.pipeImages.bottom.src = 'assets/dna2.jpg'; // Add your bottom pipe image here
+    this.pipeImages.top.src = 'assets/dna1.jpg'; // Add your top pipe image
+    this.pipeImages.bottom.src = 'assets/dna2.jpg'; // Add your bottom pipe image
   }
 
   initGame() {
@@ -70,8 +69,18 @@ export class AppComponent implements OnInit {
   }
 
   startGame() {
-    this.isGameRunning = true;
-    this.startGameLoop();
+    this.countdown = 3; // Initialize countdown
+    const countdownInterval = setInterval(() => {
+      if (this.countdown! > 1) {
+        this.countdown!--; // Decrease countdown
+      } else {
+        clearInterval(countdownInterval);
+        this.countdown = null; // Clear countdown
+        this.isGameRunning = true;
+        this.startGameLoop(); // Start game loop
+      }
+      this.render(); // Re-render the canvas during countdown
+    }, 1000);
   }
 
   restartGame() {
@@ -152,13 +161,22 @@ export class AppComponent implements OnInit {
     // Draw score
     this.ctx.fillStyle = 'black';
     this.ctx.font = '20px Arial';
-    this.ctx.fillText(`CRISPR Score: ${this.score}`, 10, 20);
+    this.ctx.fillText(`CRISPR Score: ${this.score}`, 100, 20);
+
+    // Display countdown
+    if (this.countdown !== null) {
+      this.ctx.fillStyle = 'black';
+      this.ctx.font = '50px Arial';
+      this.ctx.textAlign = 'center';
+      this.ctx.fillText(this.countdown === 0 ? 'Go!' : this.countdown.toString(), 400, 300);
+    }
 
     // Display game over
     if (this.gameOver) {
       this.ctx.fillStyle = 'red';
       this.ctx.font = '40px Arial';
-      this.ctx.fillText('Game Over', 300, 300);
+      this.ctx.textAlign = 'center';
+      this.ctx.fillText('Game Over', 400, 300);
     }
   }
 }
